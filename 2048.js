@@ -1,6 +1,6 @@
 var board;
-var score;
-var rows =4;
+var score = 0;
+var rows = 4;
 var columns = 4;
 
 window.onload = function(){
@@ -41,6 +41,13 @@ document.addEventListener('keyup',(e) =>{
     else if (e.code == "ArrowRight"){
         slideRight()
     }
+    else if (e.code == "ArrowUp"){
+        slideUp()
+    }
+    else if(e.code == "ArrowDown"){
+        slideDown()
+    }
+    document.getElementById("score").innerText = score
 })
 
 function filterZero(row){
@@ -88,4 +95,50 @@ function slideRight(){
             updateTile(tile, num)
         }
     }
+}
+function slideUp(){
+    for ( let c=0; c<columns; c++){
+        let row=[board[0][c],board[1][c],board[2][c],board[3][c]]
+        row = slide(row)
+        for(let r = 0;r<rows;r++){
+            board[r][c] = row[r];
+            let tile = document.getElementById(r.toString()+"-"+c.toString())
+            let num = board[r][c]
+            updateTile(tile,num)
+        }
+    }
+}
+function slideDown(){
+    for(let c =0; c<columns;c++){
+        let row = [board[0][c],board[1][c],board[2][c],board[3][c]]
+        row.reverse()
+        row = slide(row)
+        row.reverse()
+        for(let r = 0; r < rows; r++){
+            board[r][c] = row[r]
+            let tile = document.getElementById(r.toString()+"-"+c.toString())
+            let num = board[r][c]
+            updateTile(tile,num)
+        }
+    }
+}
+
+function setTwo(){
+    if(!hasEmptyTile()){
+        return
+    }
+    let found = false;
+    
+}
+
+function hasEmptyTile(){
+    let count = 0;
+    for (let r = 0; r < rows; r++){
+        for (let c = 0; c < columns; c++){
+            if (board[r][c] == 0){
+                return true
+            }
+        }
+    }
+    return false
 }
